@@ -8,6 +8,11 @@
     then again push them with their new count
     and if at any point , count of a no is < 0 means that , It is not available in all places where group's first element 
     present , then also we return false
+    
+    
+    
+    Otherwise , Instead of priority queue ,  I simply can use array and substract all values in O(1) time to all groupSize members
+    and whose count = 0 , then skip that one and move to the next one
 */
 class Solution {
 public:
