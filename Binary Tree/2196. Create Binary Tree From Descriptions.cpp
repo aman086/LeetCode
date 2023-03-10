@@ -22,10 +22,12 @@
   a node which never became child of any node , that is our root node
 */
 
+
 class Solution {
 public:
     TreeNode* createBinaryTree(vector<vector<int>>& descriptions) {
         unordered_map<int , pair<TreeNode* , bool>> mp;
+        unordered_map<int,bool> check;
         TreeNode* root = NULL;
         for(auto it : descriptions){
             int parent = it[0];
@@ -53,6 +55,33 @@ public:
             for(auto it : descriptions){
                 if(!mp[it[0]].second) root = mp[it[0]].first;
             }
+         return root;         
+        }
+};
+
+
+// best solution :
+
+
+    TreeNode* createBinaryTree(vector<vector<int>>& descriptions) {
+        unordered_map<int , pair<TreeNode* , bool>> mp;
+        TreeNode* root = NULL;
+        for(auto it : descriptions){
+           
+            if(mp.count(it[0])==0) mp[it[0]].first = new TreeNode(it[0]);
+            if(mp.count(it[1])==0) mp[it[1]].first = new TreeNode(it[1]);
+  // this count() function is for checking that this number is present or not
+  // if count == 0 means that not present , otherwise present. 
+
+    (it[2]) ? mp[it[0]].first->left = mp[it[1]].first :  mp[it[0]].first->right = mp[it[1]].first;  
+
+            mp[it[1]].second = true;    
+    }
+
+// we have to find its alternative , because this below code increasing the time complexity      
+for(auto it : descriptions){
+    if(!mp[it[0]].second) root = mp[it[0]].first;
+}
          return root;         
         }
 };
