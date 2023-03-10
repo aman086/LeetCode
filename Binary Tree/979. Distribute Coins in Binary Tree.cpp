@@ -54,7 +54,8 @@ public:
     }
 };
 
-
+// In every case return statement , we are returning the same thing , (root->val -  1 + lt + rt)
+//  that is the key point of better optimization
 
 
 
