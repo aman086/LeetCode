@@ -53,3 +53,27 @@ public:
         return stepCount;
     }
 };
+
+
+
+
+
+//  Best Code for some other coder
+
+class Solution {
+    int helper(TreeNode* root,int &ct){
+        if(root==NULL){
+            return 0;
+        }
+        int left=helper(root->left,ct);
+        int right=helper(root->right,ct);
+        ct+= abs(left)+abs(right);
+        return root->val-1+left+right;
+    }
+public:
+    int distributeCoins(TreeNode* root) {
+        int ct=0;
+        helper(root,ct);
+        return ct;
+    }
+};
