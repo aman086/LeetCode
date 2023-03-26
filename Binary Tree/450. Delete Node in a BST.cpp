@@ -15,6 +15,31 @@ public:
         if(rt->left == NULL){ rt->left = lf; return;}
         setKro(lf , rt->left);
     }
+
+    void traverse(TreeNode* root , TreeNode*& parent , TreeNode*& target , int key){
+        if(root == NULL) return;
+
+        if(root->right){
+            if(root->val < key){
+            if(root->right->val == key){
+                parent = root;
+                target = root->right;
+                return;
+            }else
+              traverse(root->right , parent , target , key);
+            }
+        }
+    if(root->left){
+        if(root->val > key){
+            if(root->left->val == key){
+                parent = root;
+                target = root->left;
+                return;
+            }else
+              traverse(root->left , parent , target , key);
+        } 
+    }
+    }
     TreeNode* deleteNode(TreeNode* root, int key) {
         if(root == NULL) return NULL;
         if(root->val == key){
@@ -23,37 +48,43 @@ public:
             setKro(root->left , root->right);
             return root->right;
         }
-        queue<TreeNode*> q;
-        q.push(root);
         TreeNode* parent = NULL;
         TreeNode* target = NULL;
-        while(!q.empty()){
-            int sz = q.size();
-            bool found = false;
-            for(int i=0;i<sz;i++){
-                auto tp = q.front();
-                q.pop();
-                if(tp->left){
-                    if(tp->left->val == key){
-                        parent = tp;
-                        target = tp->left;
-                        found = true;
-                        break;
-                    }else
-                      q.push(tp->left);
-                }   
-                if(tp->right){
-                    if(tp->right->val == key){
-                        parent = tp;
-                        target = tp->right;
-                        found = true;
-                        break;
-                    }
-                    else q.push(tp->right);
-                }
-                if(found) break;
-          }   
-        }
+    // searching in O(log n ) complexity    
+        traverse(root , parent , target , key);
+
+     // searching in O(n) complexity
+
+
+        // queue<TreeNode*> q;
+        // q.push(root);
+        // while(!q.empty()){
+        //     int sz = q.size();
+        //     bool found = false;
+        //     for(int i=0;i<sz;i++){
+        //         auto tp = q.front();
+        //         q.pop();
+        //         if(tp->left){
+        //             if(tp->left->val == key){
+        //                 parent = tp;
+        //                 target = tp->left;
+        //                 found = true;
+        //                 break;
+        //             }else
+        //               q.push(tp->left);
+        //         }   
+        //         if(tp->right){
+        //             if(tp->right->val == key){
+        //                 parent = tp;
+        //                 target = tp->right;
+        //                 found = true;
+        //                 break;
+        //             }
+        //             else q.push(tp->right);
+        //         }
+        //         if(found) break;
+        //   }   
+        // }
         if(parent==NULL && target==NULL) return root;
         TreeNode* temp;
         if(target->left==NULL && target->right==NULL){
