@@ -62,3 +62,45 @@ public:
         
     }
 };
+
+
+
+
+
+// We can do one more thing
+
+We can put elements one by one after 1 distance until we reach at the end and when we reach at end then we start from index - 1
+and complete filling
+
+
+#define x first
+#define y second
+typedef pair<int, int> PII;
+class Solution {
+public:
+    vector<int> rearrangeBarcodes(vector<int>& barcodes) {
+        int n = barcodes.size();
+        unordered_map<int, int> h;
+        for(auto x : barcodes) h[x] ++;
+        vector<PII> p;
+        for(auto [k, v] : h) {
+            p.push_back({k, v});
+        }
+        sort(p.begin(), p.end(), cmp);
+        vector<int> res(n);
+        int k = 0;
+        for(int i = 0; i < p.size(); i ++){
+            while(p[i].y) {
+                res[k] = p[i].x;
+                p[i].y --;
+                k += 2;
+                if(k >= n) k = 1;
+            }
+        }
+        return res;
+    }
+
+    static bool cmp(PII a, PII b) {
+        return a.y > b.y;
+    }
+};
